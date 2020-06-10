@@ -1,6 +1,10 @@
-# productivity-front-end
+# Reasonable Productivity Front-End
 
-> My great Nuxt.js project
+Productivity application built with Vue.js.
+
+## Overview
+
+This app manages tasks and lists. Future versions will also handle and syncing calendar and contacts to use with tasks.
 
 ## Build Setup
 
@@ -19,4 +23,36 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+### Technologies
+
+* Vue.js
+* Nuxt
+* Vuex
+* VueRouter
+* Vuetify
+* Axios
+
+## Routes
+
+### Tasks
+
+**/tasks**
+
+**/tasks/:taskId**
+
+### Auth
+
+**/login**
+
+**/register**
+
+**/verify**
+
+**/forgot-password**
+
+**/reset-password**
+
+### Other
+
+**/settings**
+
