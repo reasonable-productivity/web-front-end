@@ -6,6 +6,15 @@ Productivity application built with Vue.js.
 
 This app manages tasks and lists. Future versions will also handle and syncing calendar and contacts to use with tasks.
 
+### Technologies
+
+* Vue.js
+* Nuxt
+* Vuex
+* VueRouter
+* Vuetify
+* Axios
+
 ## Build Setup
 
 ```bash
@@ -22,15 +31,6 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
-
-### Technologies
-
-* Vue.js
-* Nuxt
-* Vuex
-* VueRouter
-* Vuetify
-* Axios
 
 ## Routes
 
