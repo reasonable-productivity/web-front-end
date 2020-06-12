@@ -5,14 +5,14 @@
         <h1>Tasks</h1>
 
         <v-text-field
-          v-model="newTask"
+          v-model="newTask.title"
           label="Enter Task (press enter)"
           @keypress.enter="addTask"
         />
 
         <v-list dense>
           <v-list-item-group color="primary">
-            <v-list-item v-for="(todo, i) in list" :key="i">
+            <v-list-item v-for="(task, i) in tasks" :key="i">
               <template v-slot:default="{ active }">
                 <v-list-item-action>
                   <v-checkbox
@@ -22,11 +22,11 @@
 
                 <v-list-item-content>
                   <span
-                    v-if="editingTask.index === i"
+                    v-if="editingTask.id === task.id"
                     class="d-flex justify-space-between"
                   >
                     <v-text-field
-                      v-model="editingTask.text"
+                      v-model="editingTask.title"
                       append-outer-icon="mdi-check"
                       @click:append-outer="saveEdit"
                       @keypress.enter="saveEdit"
@@ -39,12 +39,12 @@
                     v-else
                     class="d-flex justify-space-between"
                   >
-                    {{ todo.text }}
+                    {{ task.title }}
                     <span>
                       <v-icon @click.stop="editTask(i)">
                         mdi-pencil
                       </v-icon>
-                      <v-icon @click.stop="remove(i)">
+                      <v-icon @click.stop="removeTask(task.id)">
                         mdi-delete-outline
                       </v-icon>
                     </span>
@@ -60,37 +60,52 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      newTask: '',
-      editingTask: {
-        index: -1,
-        text: ''
-      }
+      newTask: {
+        title: '',
+        description: '',
+        user: 1
+      },
+      editingTask: {}
     }
   },
   computed: {
-    ...mapState('tasks', ['list'])
+    ...mapState('tasks', ['tasks'])
+  },
+  created () {
+    this.getAllTasks()
   },
   methods: {
-    ...mapMutations('tasks', ['add', 'edit', 'remove', 'toggle']),
+    ...mapMutations('tasks', ['edit', 'toggle']),
+    ...mapActions('tasks',
+      ['getAllTasks', 'postNewTask', 'deleteTask', 'patchTask']
+    ),
     addTask () {
-      this.add(this.newTask)
+      this.postNewTask(this.newTask)
       this.newTask = ''
     },
     editTask (index) {
-      this.editingTask.index = index
-      this.editingTask.text = this.list[index].text
+      this.editingTask = {
+        ...this.tasks[index]
+      }
+    },
+    removeTask (taskId) {
+      this.deleteTask(taskId)
     },
     cancelEdit () {
-      this.editingTask.index = -1
-      this.editingTask.text = ''
+      this.editingTask = {}
     },
     saveEdit () {
-      this.edit(this.editingTask)
+      const payload = {
+        id: this.editingTask.id,
+        taskData: this.editingTask
+      }
+      delete payload.taskData.id
+      this.patchTask(payload)
       this.cancelEdit()
     }
   }
