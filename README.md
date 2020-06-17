@@ -40,6 +40,12 @@ $ npm run generate
 
 **/tasks/:taskId**
 
+### Lists
+
+**/lists**
+
+**/lists/:listId**
+
 ### Auth
 
 **/login**
