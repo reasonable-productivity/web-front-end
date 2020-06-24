@@ -62,3 +62,7 @@ $ npm run generate
 
 **/settings**
 
+## Mockups
+
+<img src="TasksPage.png">
+
