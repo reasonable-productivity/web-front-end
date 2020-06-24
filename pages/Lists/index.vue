@@ -4,7 +4,9 @@
       <v-col sm="6" offset-sm="3">
         <v-text-field v-model="newListName">
           <template v-slot:append-outer>
-            <v-btn color="primary" @click="addItem">Add List Item</v-btn>
+            <v-btn color="primary" @click="addItem">
+              Add List Item
+            </v-btn>
           </template>
         </v-text-field>
         <v-treeview :items="lists">
@@ -41,7 +43,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
 
           <v-btn
             color="green darken-1"

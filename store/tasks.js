@@ -20,8 +20,8 @@ export const actions = {
     commit('remove', id)
   },
   async patchTask ({ commit }, payload) {
-    const { id, taskData } = payload
-    await axios.patch(`${API_URL}/tasks/${id}/`, taskData)
+    const { id, task } = payload
+    await axios.patch(`${API_URL}/tasks/${id}/`, task)
     commit('edit', payload)
   }
 }
@@ -34,10 +34,14 @@ export const mutations = {
     state.tasks.push(task)
   },
   edit (state, payload) {
-    const { index, text } = payload
+    const { id, task } = payload
+
+    const index = state.tasks.findIndex((task) => {
+      return task.id === id
+    })
     const updatedTask = {
       ...state.tasks[index],
-      text
+      ...task
     }
     state.tasks.splice(index, 1, updatedTask)
   },
@@ -46,8 +50,5 @@ export const mutations = {
       return task.id === id
     })
     state.tasks.splice(index, 1)
-  },
-  toggle (state, todo) {
-    todo.done = !todo.done
   }
 }
