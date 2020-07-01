@@ -6,6 +6,18 @@ export const state = () => ({
   tasks: []
 })
 
+export const getters = {
+  sortedTasks (state) {
+    const tasks = [...state.tasks]
+    return tasks.sort((taskA, taskB) => {
+      if (taskA.completed) {
+        return 1
+      }
+      return -1
+    })
+  }
+}
+
 export const actions = {
   async getAllTasks ({ commit }) {
     const { data } = await axios.get(`${API_URL}/tasks/`)
