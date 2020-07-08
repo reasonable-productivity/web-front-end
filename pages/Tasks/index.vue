@@ -127,6 +127,22 @@
               :crud="true"
             />
           </v-tab-item>
+
+          <v-tab-item>
+            <v-expansion-panels accordion>
+              <v-expansion-panel
+                v-for="project in projects"
+                :key="project.id"
+              >
+                <v-expansion-panel-header>
+                  {{ project.title }}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  {{ project.description }}
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-tab-item>
         </v-tabs-items>
 
         <v-btn color="primary" fab @click="toggleNewTask">
@@ -176,15 +192,20 @@ export default {
   },
   computed: {
     ...mapState('tasks', ['tasks']),
+    ...mapState('projects', ['projects']),
     ...mapGetters('tasks', ['sortedTasks'])
   },
   created () {
     this.getAllTasks()
+    this.getProjects()
   },
   methods: {
     ...mapMutations('tasks', ['edit', 'toggle']),
     ...mapActions('tasks',
       ['getAllTasks', 'postNewTask', 'deleteTask', 'patchTask']
+    ),
+    ...mapActions('projects',
+      ['getProjects']
     ),
     filteredTasks (cat) {
       let category = cat || 1
